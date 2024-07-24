@@ -193,7 +193,7 @@ Outputs:
       en: Visit Url
     Value:
       Fn::Sub:
-        - 'http://${ServerAddress}:9380'
+        - 'http://${ServerAddress}'
         - ServerAddress:
             Fn::Select:
             - 0
