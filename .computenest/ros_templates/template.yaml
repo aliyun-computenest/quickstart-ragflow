@@ -121,7 +121,6 @@ Parameters:
     Label:
       en: VSwitch ID
       zh-cn: 交换机实例ID
-    Default: ''
     AssociationProperty: 'ALIYUN::ECS::VSwitch::VSwitchId'
     AssociationPropertyMetadata:
       VpcId: VpcId
