@@ -33,3 +33,8 @@ RAGFlow 社区版上的费用主要涉及：
   ![image.png](2.jpg)
 4. 单击链接访问服务。
   ![image.png](3.jpg)
+
+## 常见问题
+1. 使用通义千问API 报错API调用频率限制：
+  ![image.png](faq_1.png)
+  解决方案：添加[Ragflow官方交流群](https://github.com/infiniflow/ragflow/blob/main/README_zh.md)协商修改使用限制。
