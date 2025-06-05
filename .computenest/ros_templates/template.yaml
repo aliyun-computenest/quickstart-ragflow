@@ -180,7 +180,7 @@ Resources:
       CommandContent:
         Fn::Sub:
           - |
-            systemctl start ragflow
+            systemctl enable --now ragflow
             sleep 10
             ARGUS_VERSION=3.5.7 /bin/bash -c "$(curl -sS https://cms-agent-${RegionId}.oss-${RegionId}-internal.aliyuncs.com/Argus/agent_install_ecs-1.7.sh)" >> /root/install_cms_agent.log 2>&1
           - RegionId:
