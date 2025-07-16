@@ -14,21 +14,24 @@ Service:
           ArtifactId: ${Artifact.Artifact_1.ArtifactId}
           ArtifactVersion: ${Artifact.Artifact_1.ArtifactVersion}
     TemplateConfigs:
-      - Name: 单机版
-        Url: 'ros_templates/template.yaml'
-      - Name: 容器集群版
-        Url: 'ros_templates/template-HA.yaml'
-        AllowedRegions:
-          - ap-southeast-1
+    - Name: 单机版
+      Url: 'ros_templates/template.yaml'
+    - Name: 容器集群版
+      Url: 'ros_templates/template-HA.yaml'
+      AllowedRegions:
+      - ap-southeast-1
   ServiceType: private
   ServiceInfo:
-    Locale: zh-CN
-    Description: RAGFlow是一个基于深度文档理解的开源检索增强生成（RAG）引擎，旨在为各种规模的企业提供一个高效的RAG工作流程。 通过结合大型语言模型（LLM），RAGFlow能够提供基于证据的、可靠的问答功能，并能够处理来自不同复杂格式数据的引用和引文。
-    Image: 'resources/icons/service_logo.png'
+  - Locale: zh-CN
+    Name: aliyun-computenest/quickstart-ragflow-b9tl
+    ShortDescription: Service description
+    Image: 
+      https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/bfd30cc4-e959-4093-b5cb-77a05058b911.png
+    Softwares: []
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
-    ArtifactName: ragflow 
+    ArtifactName: ragflow
     Description: ragflow
     ArtifactProperty:
       RegionId: ${ImageBuilder.EcsImage.RegionId}
@@ -48,7 +51,7 @@ ImageBuilder:
     InternetMaxBandwidthOut: 5
     CommandType: RunShellScript
     Timeout: 10800
-    Tags: [ ]
+    Tags: []
     CommandContent: |-
       #!/bin/bash
       yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo

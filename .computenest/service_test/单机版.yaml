@@ -1,0 +1,7 @@
+templateName: 单机版
+regionId: cn-hangzhou
+parameters:
+  PayType: "PostPaid"
+  EcsInstanceType: "Please fill in"
+  InstancePassword: "$[iact3-auto]"
+caseId: stc-b341147b8d854649b578
