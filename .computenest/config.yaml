@@ -9,9 +9,17 @@ Service:
         'centos_7_9_x64_20G_alibase_20240403.vhd':
           ArtifactId: ${Artifact.EcsImage.ArtifactId}
           ArtifactVersion: ${Artifact.EcsImage.ArtifactVersion}
+      HelmChartArtifactRelation:
+        '{{ computenest::helmchart::quickstart-ragflow-k8s }}':
+          ArtifactId: ${Artifact.Artifact_1.ArtifactId}
+          ArtifactVersion: ${Artifact.Artifact_1.ArtifactVersion}
     TemplateConfigs:
       - Name: 单机版
         Url: 'ros_templates/template.yaml'
+      - Name: 容器集群版
+        Url: 'ros_templates/template-HA.yaml'
+        AllowedRegions:
+          - ap-southeast-1
   ServiceType: private
   ServiceInfo:
     Locale: zh-CN
@@ -25,6 +33,13 @@ Artifact:
     ArtifactProperty:
       RegionId: ${ImageBuilder.EcsImage.RegionId}
       ImageId: ${ImageBuilder.EcsImage.SourceImageId}
+  Artifact_1:
+    ArtifactType: HelmChart
+    ArtifactName: quickstart-ragflow-k8s-helm-chart
+    ArtifactProperty:
+      RepoName: ${HelmChartBuilder.HelmChart_1.RepoName}
+      Tag: ${HelmChartBuilder.HelmChart_1.Tag}
+      RepoType: Public
 ImageBuilder:
   EcsImage:
     RegionId: ap-southeast-1
@@ -67,3 +82,8 @@ ImageBuilder:
       [Install]
       WantedBy=multi-user.target
       EOF
+HelmChartBuilder:
+  HelmChart_1:
+    HelmChartPath: 'resources/artifact_resources/helm_chart/ragflow-0.1.0.tgz'
+    RepoName: ragflow
+    Tag: 0.1.0
