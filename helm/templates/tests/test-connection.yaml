@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: busybox
+      image: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/busybox:latest
       command:
       - 'wget'
       args:

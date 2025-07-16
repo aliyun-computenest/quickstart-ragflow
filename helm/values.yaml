@@ -28,7 +28,7 @@ env:
 
   # The RAGFlow Docker image to download.
   # Defaults to the v0.19.1-slim edition, which is the RAGFlow Docker image without embedding models.
-  RAGFLOW_IMAGE: infiniflow/ragflow:v0.19.1-slim
+  RAGFLOW_IMAGE: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/infiniflow/ragflow:v0.19.1-slim
   #
   # To download the RAGFlow Docker image with embedding models, uncomment the following line instead:
   # RAGFLOW_IMAGE: infiniflow/ragflow:v0.19.1
@@ -111,7 +111,7 @@ ragflow:
 
 infinity:
   image:
-    repository: infiniflow/infinity
+    repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/infiniflow/infinity
     tag: v0.6.0-dev3
   storage:
     className: alicloud-disk-topology-alltype
@@ -146,7 +146,7 @@ elasticsearch:
 
 minio:
   image:
-    repository: quay.io/minio/minio
+    repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/quay.io/minio/minio
     tag: RELEASE.2023-12-20T01-00-02Z
   storage:
     className: alicloud-disk-topology-alltype
@@ -165,7 +165,7 @@ minio:
 
 mysql:
   image:
-    repository: mysql
+    repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/mysql
     tag: 8.0.39
   storage:
     className: alicloud-disk-topology-alltype
@@ -184,7 +184,7 @@ mysql:
 
 redis:
   image:
-    repository: valkey/valkey
+    repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/valkey/valkey:8
     tag: 8
   storage:
     className: alicloud-disk-topology-alltype

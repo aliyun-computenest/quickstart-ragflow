@@ -303,9 +303,9 @@ Parameters:
   WorkerInstanceType:
     Type: String
     Label:
-      en: Worker Nodes Types
-      zh-cn: Worker节点规格
-    Default: ecs.c8i.2xlarge
+      en: Worker Nodes Types(at least 12 core 24G)
+      zh-cn: Worker节点规格(至少12核24G)
+    Default: ecs.c8i.3xlarge
     Required: true
     AssociationProperty: ALIYUN::ECS::Instance::InstanceType
     AssociationPropertyMetadata:
