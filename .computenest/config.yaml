@@ -3,7 +3,8 @@ Service:
   DeployType: ros
   DeployMetadata:
     ServiceInstanceNameRule:
-      Prefix: ragflow
+      Prefix: ragflow-
+      UseDefaultValue: true
     SupplierDeployMetadata:
       ArtifactRelation:
         'centos_7_9_x64_20G_alibase_20240403.vhd':
@@ -20,6 +21,9 @@ Service:
       Url: 'ros_templates/template-HA.yaml'
       AllowedRegions:
       - ap-southeast-1
+      OutputConfigs:
+        - OutputKey: 内网地址
+          EnableWebProxy: true
   ServiceType: private
   ServiceInfo:
   - Locale: zh-CN

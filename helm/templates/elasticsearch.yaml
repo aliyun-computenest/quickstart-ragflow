@@ -45,50 +45,47 @@ spec:
         checksum/config-env: {{ include (print $.Template.BasePath "/env.yaml") . | sha256sum }}
     spec:
       initContainers:
-      - name: fix-data-volume-permissions
-        image: alpine
-        command:
-        - sh
-        - -c
-        - "chown -R 1000:0 /usr/share/elasticsearch/data"
-        volumeMounts:
-          - mountPath: /usr/share/elasticsearch/data
-            name: es-data
-      - name: sysctl
-        image: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/busybox:latest
-        securityContext:
-          privileged: true
-          runAsUser: 0
-        command: ["sysctl", "-w", "vm.max_map_count=262144"]
+        - name: fix-data-volume-permissions
+          image: mirrors-ssl.aliyuncs.com/alpine
+          command:
+            - sh
+            - -c
+            - "chown -R 1000:0 /usr/share/elasticsearch/data"
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: es-data
+        - name: sysctl
+          image: mirrors-ssl.aliyuncs.com/busybox
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          command: ["sysctl", "-w", "vm.max_map_count=262144"]
       containers:
-      - name: elasticsearch
-        image: elasticsearch:{{ .Values.env.STACK_VERSION }}
-        envFrom:
-          - secretRef:
-              name: {{ include "ragflow.fullname" . }}-env-config
-          - configMapRef:
-              name: {{ include "ragflow.fullname" . }}-es-config
-        ports:
-          - containerPort: 9200
-            name: http
-          - containerPort: 9300
-            name: transport
-        volumeMounts:
-          - mountPath: /usr/share/elasticsearch/data
-            name: es-data
+        - name: elasticsearch
+          image: mirrors-ssl.aliyuncs.com/elasticsearch:{{ .Values.env.STACK_VERSION }}
+          envFrom:
+            - secretRef:
+                name: {{ include "ragflow.fullname" . }}-env-config
+            - configMapRef:
+                name: {{ include "ragflow.fullname" . }}-es-config
+          ports:
+            - containerPort: 9200
+              name: http
+            - containerPort: 9300
+              name: transport
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: es-data
         {{- with .Values.elasticsearch.deployment.resources }}
-        resources:
+          resources:
           {{- . | toYaml | nindent 10 }}
         {{- end }}
-        securityContext:
-          capabilities:
-            add:
-              - "IPC_LOCK"
-          runAsUser: 1000
-          # NOTE: fsGroup doesn't seem to
-          # work so use init container instead
-          # fsGroup: 1000
-          allowPrivilegeEscalation: false
+          securityContext:
+            runAsUser: 1000
+            # NOTE: fsGroup doesn't seem to
+            # work so use init container instead
+            # fsGroup: 1000
+            allowPrivilegeEscalation: false
       volumes:
         - name: es-data
           persistentVolumeClaim:

@@ -4,6 +4,16 @@ Description:
   zh-cn: Use Helm Chart for application deployment, and support Ack and Acs clusters
 
 Parameters:
+  BaiLianApiKey:
+    NoEcho: true
+    Type: String
+    Description:
+      zh-cn: 开通百炼模型服务，并获得 API-KEY。请参考： <a href="https://developer.aliyun.com/article/1655158"  target="_blank">获取百炼API-KEY</a>。
+      en: 'Activate BaiLian and obtain the API-KEY. Please refer to:  <a href="https://developer.aliyun.com/article/1655158"  target="_blank">Get BaiLian API-KEY</a>.'
+    Label:
+      zh-cn: 百炼 API-KEY
+      en: BaiLian API-KEY
+    AssociationProperty: ALIYUN::Bailian::ApiKey::ApiKeyInfo
   PublicAccessEnabled:
     Type: Boolean
     Label:
@@ -12,17 +22,13 @@ Parameters:
     Description:
       en: Whether to enable public access to RAGFlow service
       zh-cn: 是否启用RAGFlow服务的公网访问
-    Default: false
+    Default: True
   EngineOption:
     Type: String
     AllowedValues:
-      - infinity
       - Elasticsearch
     AssociationPropertyMetadata:
       ValueLabelMapping:
-        infinity:
-          zh-cn: Infinity引擎
-          en: Infinity Engine
         Elasticsearch:
           zh-cn: Elasticsearch引擎
           en: Elasticsearch Engine
@@ -30,19 +36,15 @@ Parameters:
       en: Engine Option
       zh-cn: 引擎选项
     Required: true
-    Default: infinity
+    Default: Elasticsearch
 
   CsOptions:
     Type: String
     AllowedValues:
-      - ExistCs
       - NewAck
       - NewAcs
     AssociationPropertyMetadata:
       ValueLabelMapping:
-        ExistCs:
-          zh-cn: 已有集群
-          en: Existing Cluster
         NewAck:
           zh-cn: 新建ACK集群
           en: New ACK
@@ -53,26 +55,7 @@ Parameters:
       en: Cluster Option
       zh-cn: 集群选项
     Required: true
-    Default: ExistCs
-  ClusterId:
-    Type: String
-    Description:
-      en: The ID of Kubernetes ClusterId in which application deployed.
-      zh-cn: 部署应用程序的K8s集群ID
-    AllowedPattern: '[0-9a-z]+$'
-    Required: true
-    Default: null
-    Label:
-      en: Kubernetes ClusterId
-      zh-cn: K8s集群ID
-    AssociationProperty: 'ALIYUN::CS::Cluster::ClusterId'
-    AssociationPropertyMetadata:
-      RegionId: '${RegionId}'
-      Visible:
-        Condition:
-          Fn::Equals:
-            - ${CsOptions}
-            - ExistCs
+    Default: NewAck
   PayType:
     Type: String
     Label:
@@ -305,6 +288,27 @@ Parameters:
     Label:
       en: Worker Nodes Types(at least 12 core 24G)
       zh-cn: Worker节点规格(至少12核24G)
+    AllowedValues:
+      - ecs.c8i.3xlarge
+      - ecs.u1-c1m2.xlarge
+      - ecs.u1-c1m4.xlarge
+      - ecs.u1-c1m8.xlarge
+      - ecs.u1-c1m1.2xlarge
+      - ecs.u1-c1m2.2xlarge
+      - ecs.u1-c1m4.2xlarge
+      - ecs.u1-c1m8.2xlarge
+      - ecs.u1-c1m1.3xlarge
+      - ecs.u1-c1m2.3xlarge
+      - ecs.u1-c1m4.3xlarge
+      - ecs.u1-c1m8.3xlarge
+      - ecs.u1-c1m1.4xlarge
+      - ecs.u1-c1m2.4xlarge
+      - ecs.u1-c1m4.4xlarge
+      - ecs.u1-c1m8.4xlarge
+      - ecs.u1-c1m1.8xlarge
+      - ecs.u1-c1m2.8xlarge
+      - ecs.u1-c1m4.8xlarge
+      - ecs.u1-c1m8.8xlarge
     Default: ecs.c8i.3xlarge
     Required: true
     AssociationProperty: ALIYUN::ECS::Instance::InstanceType
@@ -398,22 +402,11 @@ Conditions:
     Fn::Equals:
       - Ref: PublicAccessEnabled
       - true
-  CreateClusterCondition:
-    Fn::Or:
-      - Fn::Equals:
-          - NewAck
-          - Ref: CsOptions
-      - Fn::Equals:
-          - NewAcs
-          - Ref: CsOptions
+
   FlannelPluginCondition:
     Fn::Equals:
       - Ref: AckNetworkPlugin
       - flannel
-  ElasticsearchEngineCondition:
-    Fn::Equals:
-      - Ref: EngineOption
-      - Elasticsearch
 Resources:
   ElasticPassword:
     Type: ALIYUN::RandomString
@@ -471,7 +464,6 @@ Resources:
       character_sequences:
         - sequence: "!#$^*-+="
   VpcModule:
-    Condition: CreateClusterCondition
     Type: MODULE::ACS::ComputeNest::VpcAndVSwitch
     Version: default
     Properties:
@@ -553,6 +545,15 @@ Resources:
         Operator: NotEmpty
         Timeout: 300
         Stage: Create/Update
+      - Kind: Deployment
+        Name: ragflow
+        Namespace:
+          Ref: 'ALIYUN::StackName'
+        JsonPath: $.spec.replicas
+        Operator: Equals
+        Value: 1
+        Timeout: 300
+        Stage: Create/Update
     Properties:
       ClusterId:
         Fn::GetAtt:
@@ -560,12 +561,24 @@ Resources:
           - ClusterId
       HelmChartUrl: '{{ computenest::helmchart::quickstart-ragflow-k8s }}'
       ChartValues:
+        ragflow:
+          service_conf:
+            user_default_llm:
+              factory: 'Tongyi-Qianwen'
+              api_key:
+                Fn::Jq:
+                  - First
+                  - .Key
+                  - Ref: BaiLianApiKey
+              base_url: ''
+              default_models:
+                chat_model: ''
+                embedding_model: ''
+                rerank_model: ''
+                asr_model: ''
+                image2text_model: ''
         env:
-          DOC_ENGINE:
-            Fn::If:
-              - ElasticsearchEngineCondition
-              - "elasticsearch"
-              - "infinity"
+          DOC_ENGINE: "elasticsearch"
           STACK_VERSION: "8.11.3"
           ELASTIC_PASSWORD:
             Fn::GetAtt:
@@ -655,7 +668,7 @@ Resources:
       Kind: Service
       FirstMatch: True
       ApiVersion: v1
-      JsonPath: $.spec.clusterIP
+      JsonPath: $.status.loadBalancer.ingress[0].ip
       ClusterId:
         Fn::GetAtt:
           - AckOrAcsClusterModule
@@ -714,7 +727,6 @@ Outputs:
               - PublicServiceResources
               - Response
   Elasticsearch初始密码:
-    Condition: ElasticsearchEngineCondition
     NoEcho: true
     Label:
       zh-cn: Elasticsearch初始密码
@@ -779,7 +791,6 @@ Metadata:
     ParameterGroups:
       - Parameters:
           - CsOptions
-          - ClusterId
         Label:
           en: Cs cluster option
           zh-cn: 容器集群选项
@@ -818,6 +829,7 @@ Metadata:
           zh-cn: 基础配置
       - Parameters:
           - EngineOption
+          - BaiLianApiKey
         Label:
           en: Ragflow Configuration
           zh-cn: Ragflow配置
