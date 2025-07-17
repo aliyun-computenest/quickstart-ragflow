@@ -342,7 +342,7 @@ Parameters:
     AssociationPropertyMetadata:
       ValueLabelMapping:
         flannel: flannel
-        terway-eniip : terway
+        terway-eniip: terway
       Visible:
         Condition:
           Fn::Equals:
@@ -585,7 +585,6 @@ Resources:
             Fn::GetAtt:
               - RedisPassword
               - value
-          RAGFLOW_IMAGE: "infiniflow/ragflow:v0.19.1-slim"
           TIMEZONE: "Asia/Shanghai"
           DOC_BULK_SIZE: 4
           EMBEDDING_BATCH_SIZE: 16
@@ -766,6 +765,14 @@ Outputs:
       Fn::GetAtt:
         - RedisPassword
         - value
+  mysql和minio初始用户名:
+    Label:
+      zh-cn: mysql和minio初始用户名
+      en: mysql and minio initial username
+    Description:
+      zh-cn: mysql和minio初始用户名
+      en: mysql and minio initial username
+    Value: rag_flow
 
 Metadata:
   ALIYUN::ROS::Interface:

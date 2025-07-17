@@ -111,7 +111,7 @@ ragflow:
 
 infinity:
   image:
-    repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/infiniflow/infinity
+    repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest/infiniflow/infinity
     tag: v0.6.0-dev3
   storage:
     className: alicloud-disk-topology-alltype
@@ -147,7 +147,7 @@ elasticsearch:
 minio:
   image:
     repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest/minio/minio
-    tag: RELEASE.2023-12-20T01-00-02Z
+    tag: release.2023-12-20t01-00-02z
   storage:
     className: alicloud-disk-topology-alltype
     capacity: 40Gi
@@ -184,7 +184,7 @@ mysql:
 
 redis:
   image:
-    repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/valkey/valkey:8
+    repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/valkey/valkey
     tag: 8
   storage:
     className: alicloud-disk-topology-alltype
