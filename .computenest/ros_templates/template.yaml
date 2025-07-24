@@ -174,10 +174,13 @@ Parameters:
           - ecs.u1
           - ecs.e
     AllowedValues:
-      - ecs.u1-c1m2.xlarge
       - ecs.u1-c1m4.xlarge
+      - ecs.g9i.xlarge
+      - ecs.g8i.xlarge
+      - ecs.g7.xlarge
+      - ecs.c9i.2xlarge
+      - ecs.c8i.2xlarge
       - ecs.u1-c1m8.xlarge
-      - ecs.u1-c1m1.2xlarge
       - ecs.u1-c1m2.2xlarge
       - ecs.u1-c1m4.2xlarge
       - ecs.u1-c1m8.2xlarge
