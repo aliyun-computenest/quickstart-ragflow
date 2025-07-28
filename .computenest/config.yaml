@@ -52,7 +52,7 @@ ImageBuilder:
     RegionId: ap-southeast-1
     SourceImageId: centos_7_9_x64_20G_alibase_20240403.vhd
     InstanceType: ecs.c6.large
-    InternetMaxBandwidthOut: 5
+    InternetMaxBandwidthOut: 100
     CommandType: RunShellScript
     Timeout: 10800
     Tags: []
