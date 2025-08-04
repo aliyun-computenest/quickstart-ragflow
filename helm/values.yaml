@@ -28,7 +28,7 @@ env:
 
   # The RAGFlow Docker image to download.
   # Defaults to the v0.19.1-slim edition, which is the RAGFlow Docker image without embedding models.
-  RAGFLOW_IMAGE: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/infiniflow/ragflow:v0.19.1-slim
+  RAGFLOW_IMAGE: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest-test/infiniflow/ragflow:v0.20.0-slim
   #
   # To download the RAGFlow Docker image with embedding models, uncomment the following line instead:
   # RAGFLOW_IMAGE: infiniflow/ragflow:v0.19.1
@@ -112,7 +112,7 @@ ragflow:
 infinity:
   image:
     repository: compute-nest-registry.cn-hangzhou.cr.aliyuncs.com/computenest/infiniflow/infinity
-    tag: v0.6.0-dev3
+    tag: v0.6.0-dev5
   storage:
     className: alicloud-disk-topology-alltype
     capacity: 40Gi
