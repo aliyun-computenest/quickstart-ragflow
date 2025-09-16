@@ -34,6 +34,91 @@ RAGFlow 社区版上的费用主要涉及：
 4. 单击链接访问服务。
   ![image.png](3.jpg)
 
+
+## API调用方式示例
+
+<details style="border: 2px solid #2563eb; border-radius: 12px; padding: 20px; margin: 20px 0; background: linear-gradient(145deg, #f8fafc, #eff6ff); box-shadow: 0 8px 16px rgba(37, 99, 235, 0.15);">
+<summary style="font-weight: bold; font-size: 18px; color: white; cursor: pointer; padding: 16px; background: linear-gradient(135deg, #2563eb, #1e40af); border-radius: 8px; margin: -20px -20px 20px -20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);">
+🐍 点击展开完整 Python API 调用代码
+</summary>
+
+```python 
+
+#!/bin/bash
+
+API_SERVER="http://xxx"
+API_KEY="ragflow-ZjY2RlNG0Mm"
+AGENT_ID="79663ba692cd11f0bd180242ac120006"
+
+echo "=== RAGFlow Agent 流式对话测试 ==="
+
+# 函数：发送流式消息
+send_stream_message() {
+local question="$1"
+echo "问题: $question"
+echo "回答:"
+curl --request POST \
+--url "${API_SERVER}/api/v1/agents/${AGENT_ID}/completions" \
+--header 'Content-Type: application/json' \
+--header "Authorization: Bearer ${API_KEY}" \
+--data "{
+\"question\": \"${question}\",
+\"stream\": true
+}"
+echo -e "\n"
+echo "----------------------------------------"
+}
+
+# 函数：发送非流式消息
+send_message() {
+local question="$1"
+echo "问题: $question"
+echo "回答:"
+curl --request POST \
+--url "${API_SERVER}/api/v1/agents/${AGENT_ID}/completions" \
+--header 'Content-Type: application/json' \
+--header "Authorization: Bearer ${API_KEY}" \
+--data "{
+\"question\": \"${question}\",
+\"stream\": false
+}"
+echo -e "\n"
+echo "----------------------------------------"
+}
+
+# 1. 基础对话测试
+echo "1. 基础对话测试（流式）"
+send_stream_message "你好，请介绍一下自己"
+
+sleep 2
+
+# 2. 功能询问
+echo -e "\n2. 功能询问（流式）"
+send_stream_message "你能做什么？"
+
+sleep 2
+
+# 3. 知识问答
+echo -e "\n3. 知识问答（流式）"
+send_stream_message "请介绍一下RAGFlow的主要特点"
+
+sleep 2
+
+# 4. 技术问题
+echo -e "\n4. 技术问题（流式）"
+send_stream_message "如何使用RAGFlow构建知识库？"
+
+sleep 2
+
+# 5. 非流式测试
+echo -e "\n5. 非流式测试"
+send_message "总结一下我们刚才的对话"
+
+echo -e "\n=== 测试完成 ==="
+
+```
+</details>
+
 ## 常见问题
 1. 使用通义千问API 报错API调用频率限制：
   ![image.png](faq_1.png)
