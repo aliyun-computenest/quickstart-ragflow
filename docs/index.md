@@ -123,3 +123,7 @@ echo -e "\n=== 测试完成 ==="
 1. 使用通义千问API 报错API调用频率限制：
   ![image.png](faq_1.png)
   解决方案：添加[Ragflow官方交流群](https://github.com/infiniflow/ragflow/blob/main/README_zh.md)协商修改使用限制。
+
+2. 解析过程中崩溃
+大多数情况是由于内存爆炸导致。
+可以采取升配ECS内存或者切片使用General模式，并且调低chunk_size![img.png](img.png)

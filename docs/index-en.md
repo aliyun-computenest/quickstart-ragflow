@@ -38,3 +38,5 @@ To deploy RAGFlow Community Edition, you need to access and create some Alibaba 
 1. API call frequency limit for reporting errors using the general meaning thousand questions API:
 ![image.png](images-en/faq_1.png)
 Solution: Add [Ragflow official communication group](https://github.com/infiniflow/ragflow/blob/main/README_zh.md) to negotiate and modify the usage restrictions.
+2. During parsing, the process crashes
+Most of the time, it is due to memory explosion. You can try to increase the ECS memory or slice the General mode and lower the chunk_size!![img_1.png](img_1.png)
