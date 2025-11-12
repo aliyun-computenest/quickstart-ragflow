@@ -322,8 +322,15 @@ Resources:
           - |
             cd /root/ragflow/docker
 
-            cat >> service_conf.yaml.template <<'EOF'
-            
+            # 备份原文件
+            cp service_conf.yaml.template service_conf.yaml.template.bak
+
+            # 删除已存在的 user_default_llm 配置（如果有）
+            sed -i '/^user_default_llm:/,/^[a-zA-Z_]/{ /^[a-zA-Z_]/!d; /^user_default_llm:/d; }' service_conf.yaml.template
+
+            # 添加新的配置
+            cat >> service_conf.yaml.template << 'EOF'
+
             user_default_llm:
               factory: 'Tongyi-Qianwen'
               api_key: '${ApiKey}'
@@ -335,9 +342,11 @@ Resources:
                 asr_model: ''
                 image2text_model: ''
             EOF
+
             docker compose up -d
             systemctl enable --now ragflow
             sleep 10
+
             ARGUS_VERSION=3.5.7 /bin/bash -c "$(curl -sS https://cms-agent-${RegionId}.oss-${RegionId}-internal.aliyuncs.com/Argus/agent_install_ecs-1.7.sh)" >> /root/install_cms_agent.log 2>&1
           - RegionId:
               Ref: ALIYUN::Region
@@ -346,6 +355,8 @@ Resources:
                 - First
                 - .Key
                 - Ref: BaiLianApiKey
+
+
 Outputs:
   VisitUrl:
     Description:
