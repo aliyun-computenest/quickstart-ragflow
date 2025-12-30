@@ -79,13 +79,14 @@ Service:
   ServiceInfo:
   - Locale: zh-CN
     Name: RagFlow社区版
-    ShortDescription: RAGFlow是一个基于深度文档理解的开源检索增强生成（RAG）引擎，旨在为各种规模的企业提供一个高效的RAG工作流程。
+    ShortDescription: 
+      RAGFlow是一个基于深度文档理解的开源检索增强生成（RAG）引擎，旨在为各种规模的企业提供一个高效的RAG工作流程。 
       通过结合大型语言模型（LLM），RAGFlow能够提供基于证据的、可靠的问答功能，并能够处理来自不同复杂格式数据的引用和引文。
     Image: 
       https://service-info-public.oss-cn-hangzhou.aliyuncs.com/1853370294850618/service-image/df53acbe-c38a-4a86-8c2d-15735a58395b.jpeg
     Softwares:
     - Name: RagFlow
-      Version: v0.20.slim
+      Version: v0.23.0slim
 Artifact:
   EcsImage:
     ArtifactType: EcsImage
