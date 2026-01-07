@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="计算巢是阿里云开放给企业应用服务商的服务管理平台。服务商能够在计算巢上发布私有化部署服务，为其客户提供云上软件一键部署的能力；同时也支持全托管模式的服务，赋能服务商托管其客户资源。">
+  <title>RAGFlow 社区版快速部署 - Aliyun 计算巢 x Demo</title>
+
+  <link rel="shortcut icon" href="img/favicon.ico">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  
+
+  
+
+  
+  
+
+  
+    <script src="search/main.js"></script>
+  
+
+  
+
+  <script src="js/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="logo">
+          <img src="./img/logo-2x.png">
+        </div>
+        <div class="nav-list">
+          <ul>
+          
+              <li><a href="#ragflow">RAGFlow 社区版快速部署</a></li>
+              
+                  <li><a href="#_1">概述</a></li>
+                  
+              
+                  <li><a href="#_2">计费说明</a></li>
+                  
+              
+                  <li><a href="#ram">RAM账号所需权限</a></li>
+                  
+              
+                  <li><a href="#_3">部署流程</a></li>
+                  
+              
+                  <li><a href="#api">API调用方式示例</a></li>
+                  
+              
+                  <li><a href="#_4">常见问题</a></li>
+                  
+              
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content theme-github">
+      
+      <div class="content-inner">        
+        
+        <h1 id="ragflow">RAGFlow 社区版快速部署</h1>
+<h2 id="_1">概述</h2>
+<p>RAGFlow是一个基于深度文档理解的开源RAG（检索增强生成）引擎。当与LLM集成时，它能够提供真实的问答功能，并得到各种复杂格式数据的充分引用的支持。 详情请查看<a href="https://ragflow.io">RAGFlow官网</a>。</p>
+<h2 id="_2">计费说明</h2>
+<p>RAGFlow 社区版上的费用主要涉及：</p>
+<ul>
+<li>所选vCPU与内存规格</li>
+<li>系统盘类型及容量</li>
+<li>公网带宽</li>
+</ul>
+<h2 id="ram">RAM账号所需权限</h2>
+<p>部署RAGFlow 社区版，需要对部分阿里云资源进行访问和创建操作。因此您的账号需要包含如下资源的权限。
+  <strong>说明</strong>：当您的账号是RAM账号时，才需要添加此权限。</p>
+<table>
+<thead>
+<tr>
+<th>权限策略名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AliyunECSFullAccess</td>
+<td>管理云服务器服务（ECS）的权限</td>
+</tr>
+<tr>
+<td>AliyunVPCFullAccess</td>
+<td>管理专有网络（VPC）的权限</td>
+</tr>
+<tr>
+<td>AliyunROSFullAccess</td>
+<td>管理资源编排服务（ROS）的权限</td>
+</tr>
+<tr>
+<td>AliyunComputeNestUserFullAccess</td>
+<td>管理计算巢服务（ComputeNest）的用户侧权限</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">部署流程</h2>
+<ol>
+<li>
+<p>访问RAGFlow 社区版服务<a href="https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&amp;ServiceId=service-06cfae29e2e949b5900c">部署链接</a>，按提示填写部署参数：
+  <img alt="image.png" src="1.jpg" /></p>
+</li>
+<li>
+<p>参数填写完成后可以看到对应询价明细，确认参数后点击<strong>下一步：确认订单</strong>。确认订单完成后同意服务协议并点击<strong>立即创建</strong>进入部署阶段。 </p>
+</li>
+<li>等待部署完成后进入服务实例管理, 在控制台找到RAGFlow服务访问链接。
+  <img alt="image.png" src="2.jpg" /></li>
+<li>单击链接访问服务。
+  <img alt="image.png" src="3.jpg" /></li>
+</ol>
+<h2 id="api">API调用方式示例</h2>
+<details style="border: 2px solid #2563eb; border-radius: 12px; padding: 20px; margin: 20px 0; background: linear-gradient(145deg, #f8fafc, #eff6ff); box-shadow: 0 8px 16px rgba(37, 99, 235, 0.15);">
+<summary style="font-weight: bold; font-size: 18px; color: white; cursor: pointer; padding: 16px; background: linear-gradient(135deg, #2563eb, #1e40af); border-radius: 8px; margin: -20px -20px 20px -20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);">
+🐍 点击展开完整 Python API 调用代码
+</summary>
+
+
+<pre><code class="language-python">
+#!/bin/bash
+
+API_SERVER=&quot;http://xxx&quot;
+API_KEY=&quot;ragflow-ZjY2RlNG0Mm&quot;
+AGENT_ID=&quot;79663ba692cd11f0bd180242ac120006&quot;
+
+echo &quot;=== RAGFlow Agent 流式对话测试 ===&quot;
+
+# 函数：发送流式消息
+send_stream_message() {
+local question=&quot;$1&quot;
+echo &quot;问题: $question&quot;
+echo &quot;回答:&quot;
+curl --request POST \
+--url &quot;${API_SERVER}/api/v1/agents/${AGENT_ID}/completions&quot; \
+--header 'Content-Type: application/json' \
+--header &quot;Authorization: Bearer ${API_KEY}&quot; \
+--data &quot;{
+\&quot;question\&quot;: \&quot;${question}\&quot;,
+\&quot;stream\&quot;: true
+}&quot;
+echo -e &quot;\n&quot;
+echo &quot;----------------------------------------&quot;
+}
+
+# 函数：发送非流式消息
+send_message() {
+local question=&quot;$1&quot;
+echo &quot;问题: $question&quot;
+echo &quot;回答:&quot;
+curl --request POST \
+--url &quot;${API_SERVER}/api/v1/agents/${AGENT_ID}/completions&quot; \
+--header 'Content-Type: application/json' \
+--header &quot;Authorization: Bearer ${API_KEY}&quot; \
+--data &quot;{
+\&quot;question\&quot;: \&quot;${question}\&quot;,
+\&quot;stream\&quot;: false
+}&quot;
+echo -e &quot;\n&quot;
+echo &quot;----------------------------------------&quot;
+}
+
+# 1. 基础对话测试
+echo &quot;1. 基础对话测试（流式）&quot;
+send_stream_message &quot;你好，请介绍一下自己&quot;
+
+sleep 2
+
+# 2. 功能询问
+echo -e &quot;\n2. 功能询问（流式）&quot;
+send_stream_message &quot;你能做什么？&quot;
+
+sleep 2
+
+# 3. 知识问答
+echo -e &quot;\n3. 知识问答（流式）&quot;
+send_stream_message &quot;请介绍一下RAGFlow的主要特点&quot;
+
+sleep 2
+
+# 4. 技术问题
+echo -e &quot;\n4. 技术问题（流式）&quot;
+send_stream_message &quot;如何使用RAGFlow构建知识库？&quot;
+
+sleep 2
+
+# 5. 非流式测试
+echo -e &quot;\n5. 非流式测试&quot;
+send_message &quot;总结一下我们刚才的对话&quot;
+
+echo -e &quot;\n=== 测试完成 ===&quot;
+
+</code></pre>
+
+</details>
+
+<h2 id="_4">常见问题</h2>
+<ol>
+<li>
+<p>使用通义千问API 报错API调用频率限制：
+  <img alt="image.png" src="faq_1.png" />
+  解决方案：添加<a href="https://github.com/infiniflow/ragflow/blob/main/README_zh.md">Ragflow官方交流群</a>协商修改使用限制。</p>
+</li>
+<li>
+<p>解析过程中崩溃
+大多数情况是由于内存爆炸导致。
+可以采取升配ECS内存或者切片使用General模式，并且调低chunk_size<img alt="img.png" src="img.png" /></p>
+</li>
+</ol>
+        
+      </div>
+
+      <div class="copyrights">© 2009-2022 Aliyun.com 版权所有</div>
+    </div>
+  </div>
+  
+  <!--
+  MkDocs version      : 1.6.1
+  Docs Build Date UTC : 2026-01-07 04:38:02.879478+00:00
+  -->
+</body>
+</html>
