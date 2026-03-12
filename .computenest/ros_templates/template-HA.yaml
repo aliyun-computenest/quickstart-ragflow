@@ -17,6 +17,9 @@ Parameters:
             - ${VpcOption}
             - ExistingVPC
     Label:
+      zh-cn: 是否打开snat
+      en: set snat
+    Description:
       zh-cn: VPC如果具备公网访问能力请设置为false
       en: If the VPC has public network access, set it to false
   BaiLianApiKey:
