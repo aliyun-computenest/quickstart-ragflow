@@ -353,7 +353,7 @@ Resources:
             ApiKey:
               Fn::Jq:
                 - First
-                - .Key
+                - .ApiKeyValue
                 - Ref: BaiLianApiKey
 
 

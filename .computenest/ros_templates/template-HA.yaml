@@ -588,7 +588,7 @@ Resources:
               api_key:
                 Fn::Jq:
                   - First
-                  - .Key
+                  - .ApiKeyValue
                   - Ref: BaiLianApiKey
               base_url: ''
               default_models:
