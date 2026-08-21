@@ -76,6 +76,7 @@ Service:
       - OutputKey: 内网地址
         EnableWebProxy: true
   ServiceType: private
+  TrialDuration: 1
   ServiceInfo:
   - Locale: zh-CN
     Name: RagFlow社区版
